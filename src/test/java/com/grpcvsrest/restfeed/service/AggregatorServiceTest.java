@@ -1,4 +1,4 @@
-package com.grpcvsrest.restui.service;
+package com.grpcvsrest.restfeed.service;
 
 import org.junit.Before;
 import org.junit.Rule;

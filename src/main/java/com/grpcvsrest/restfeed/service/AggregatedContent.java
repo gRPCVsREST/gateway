@@ -1,4 +1,4 @@
-package com.grpcvsrest.restui.service;
+package com.grpcvsrest.restfeed.service;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

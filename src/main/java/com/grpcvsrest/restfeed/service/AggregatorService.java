@@ -1,4 +1,4 @@
-package com.grpcvsrest.restui.service;
+package com.grpcvsrest.restfeed.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
