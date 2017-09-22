@@ -1,4 +1,4 @@
-package com.grpcvsrest.restui.service;
+package com.grpcvsrest.restfeed.service;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -17,7 +17,9 @@ import static org.mockito.Mockito.when;
 public class AggregatorServiceTest {
 
     private static final int CONTENT_ID = 1;
-    private static final AggregatedContent CONTENT = new AggregatedContent(CONTENT_ID, "Pokemon", "Pikachu", 17);
+    private static final AggregatedContentResponse CONTENT =
+            new AggregatedContentResponse(CONTENT_ID, "Pokemon", "Pikachu");
+
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
 
@@ -37,7 +39,7 @@ public class AggregatorServiceTest {
         contentFound();
 
         // when
-        AggregatedContent result = service.fetch(CONTENT_ID);
+        AggregatedContentResponse result = service.fetch(CONTENT_ID);
 
         // then
         assertThat(result).isEqualTo(CONTENT);
@@ -50,19 +52,19 @@ public class AggregatorServiceTest {
         contentNotFound();
 
         // when
-        AggregatedContent result = service.fetch(CONTENT_ID);
+        AggregatedContentResponse result = service.fetch(CONTENT_ID);
 
         // then
         assertThat(result).isNull();
     }
 
     private void contentNotFound() {
-        when(restTemplate.getForEntity("http://fake.url/content/{id}", AggregatedContent.class, CONTENT_ID))
+        when(restTemplate.getForEntity("http://fake.url/content/{id}", AggregatedContentResponse.class, CONTENT_ID))
                 .thenReturn(new ResponseEntity<>(CONTENT, HttpStatus.NOT_FOUND));
     }
 
     private void contentFound() {
-        when(restTemplate.getForEntity("http://fake.url/content/{id}", AggregatedContent.class, CONTENT_ID))
+        when(restTemplate.getForEntity("http://fake.url/content/{id}", AggregatedContentResponse.class, CONTENT_ID))
                 .thenReturn(new ResponseEntity<>(CONTENT, HttpStatus.OK));
     }
 }

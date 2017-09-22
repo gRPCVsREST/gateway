@@ -1,4 +1,4 @@
-package com.grpcvsrest.restui.service;
+package com.grpcvsrest.restfeed.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,10 +19,10 @@ public class AggregatorService {
         this.restTemplate = restTemplate;
     }
 
-    public AggregatedContent fetch(int id) {
-        ResponseEntity<AggregatedContent> entity = restTemplate.getForEntity(
+    public AggregatedContentResponse fetch(int id) {
+        ResponseEntity<AggregatedContentResponse> entity = restTemplate.getForEntity(
                 url + "/content/{id}",
-                AggregatedContent.class,
+                AggregatedContentResponse.class,
                 id);
 
         if (entity.getStatusCode().value() == 404) {

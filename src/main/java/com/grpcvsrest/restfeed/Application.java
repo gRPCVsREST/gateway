@@ -1,4 +1,4 @@
-package com.grpcvsrest.restui;
+package com.grpcvsrest.restfeed;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
