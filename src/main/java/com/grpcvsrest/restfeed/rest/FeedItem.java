@@ -10,8 +10,8 @@ public class FeedItem {
     private final String type;
     @JsonProperty("content")
     private final String content;
-    @JsonProperty("next_url")
-    private final String nextUrl;
+    @JsonProperty("next_uri")
+    private final String nextUri;
 
 
     @JsonCreator
@@ -19,11 +19,11 @@ public class FeedItem {
             @JsonProperty("id") Integer id,
             @JsonProperty("type") String type,
             @JsonProperty("content") String content,
-            @JsonProperty("next_url") String nextUrl) {
+            @JsonProperty("next_uri") String nextUri) {
         this.id = id;
         this.content = content;
         this.type= type;
-        this.nextUrl = nextUrl;
+        this.nextUri = nextUri;
     }
 
     public Integer getId() {
@@ -38,8 +38,8 @@ public class FeedItem {
         return type;
     }
 
-    public String getNextUrl() {
-        return nextUrl;
+    public String getNextUri() {
+        return nextUri;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class FeedItem {
         if (!id.equals(feedItem.id)) return false;
         if (!type.equals(feedItem.type)) return false;
         if (!content.equals(feedItem.content)) return false;
-        return nextUrl.equals(feedItem.nextUrl);
+        return nextUri.equals(feedItem.nextUri);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class FeedItem {
         int result = id.hashCode();
         result = 31 * result + type.hashCode();
         result = 31 * result + content.hashCode();
-        result = 31 * result + nextUrl.hashCode();
+        result = 31 * result + nextUri.hashCode();
         return result;
     }
 
@@ -70,7 +70,7 @@ public class FeedItem {
                 "id=" + id +
                 ", type='" + type + '\'' +
                 ", content='" + content + '\'' +
-                ", nextUrl='" + nextUrl + '\'' +
+                ", nextUri='" + nextUri + '\'' +
                 '}';
     }
 }
