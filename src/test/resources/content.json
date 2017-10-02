@@ -2,5 +2,5 @@
   "id": 1,
   "type": "Pokemon",
   "content": "Pikachu",
-  "next_url": "http://localhost:8081/content/2"
+  "next_uri": "/content/2"
 }
