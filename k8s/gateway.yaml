@@ -1,17 +1,17 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: rest-feed-deployment
+  name: gateway
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: rest-feed
+        app: gateway
     spec:
       containers:
-        - name: rest-content-service
-          image: gcr.io/alien-fold-180922/restfeed:latest
+        - name: gateway
+          image: gcr.io/alien-fold-180922/gateway:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -22,11 +22,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rest-feed-service
+  name: gateway
 spec:
   type: LoadBalancer
   selector:
-    app: rest-feed
+    app: gateway
   ports:
    - port: 8080
      targetPort: 8080

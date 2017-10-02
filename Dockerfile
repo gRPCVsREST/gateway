@@ -1,5 +1,5 @@
 FROM java:8
 WORKDIR /
-ADD build/libs/rest-feed.jar rest-feed.jar
+ADD build/libs/gateway.jar gateway.jar
 EXPOSE 8080
-CMD java -jar rest-feed.jar
+CMD java -jar gateway.jar

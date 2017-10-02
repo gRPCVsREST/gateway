@@ -4,3 +4,4 @@ rest-feed.iml
 build/
 idea-build/
 idea-test-build/
+/gateway.iml
