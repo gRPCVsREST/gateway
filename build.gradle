@@ -46,31 +46,31 @@ bootRepackage {
 task buildImage(type: DockerBuildImage) {
     dependsOn jar
     inputDir = project.projectDir
-    tag = 'restfeed'
+    tag = 'gateway'
 }
 
 
 task buildDocker(type: DockerBuildImage) {
     dependsOn bootRepackage
     inputDir = project.projectDir
-    tag = 'restfeed:latest'
+    tag = 'gateway:latest'
 }
 
 task tagDocker(type: Exec) {
     dependsOn buildDocker
-    commandLine 'docker', 'tag', 'restfeed:latest', 'gcr.io/alien-fold-180922/restfeed:latest'
+    commandLine 'docker', 'tag', 'gateway:latest', 'gcr.io/alien-fold-180922/gateway:latest'
 }
 
 task pushDocker(type: Exec) {
     dependsOn tagDocker
-    commandLine 'gcloud', 'docker', '--', 'push', 'gcr.io/alien-fold-180922/restfeed:latest'
+    commandLine 'gcloud', 'docker', '--', 'push', 'gcr.io/alien-fold-180922/gateway:latest'
 }
 
 task deploy(type: Exec) {
-    commandLine 'kubectl', 'create', '-f', 'k8s/restfeed.yaml'
+    commandLine 'kubectl', 'create', '-f', 'k8s/gateway.yaml'
 }
 
 
 task undeploy(type: Exec) {
-    commandLine 'kubectl', 'delete', '-f', 'k8s/restfeed.yaml'
+    commandLine 'kubectl', 'delete', '-f', 'k8s/gateway.yaml'
 }
