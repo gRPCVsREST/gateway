@@ -1,13 +1,22 @@
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+
 buildscript {
     repositories {
         jcenter()
     }
+    dependencies {
+        classpath 'com.bmuschko:gradle-docker-plugin:3.1.0'
+    }
+
 }
+
 plugins {
     id 'java'
     id 'idea'
     id 'org.springframework.boot' version '1.5.6.RELEASE'
 }
+
+apply plugin: 'com.bmuschko.docker-remote-api'
 
 repositories {
     jcenter()
@@ -30,3 +39,38 @@ idea.module {
     testOutputDir = file('idea-test-build')
 }
 
+bootRepackage {
+    mainClass = 'com.grpcvsrest.restfeed.Application'
+}
+
+task buildImage(type: DockerBuildImage) {
+    dependsOn jar
+    inputDir = project.projectDir
+    tag = 'restfeed'
+}
+
+
+task buildDocker(type: DockerBuildImage) {
+    dependsOn bootRepackage
+    inputDir = project.projectDir
+    tag = 'restfeed:latest'
+}
+
+task tagDocker(type: Exec) {
+    dependsOn buildDocker
+    commandLine 'docker', 'tag', 'restfeed:latest', 'gcr.io/alien-fold-180922/restfeed:latest'
+}
+
+task pushDocker(type: Exec) {
+    dependsOn tagDocker
+    commandLine 'gcloud', 'docker', '--', 'push', 'gcr.io/alien-fold-180922/restfeed:latest'
+}
+
+task deploy(type: Exec) {
+    commandLine 'kubectl', 'create', '-f', 'k8s/restfeed.yaml'
+}
+
+
+task undeploy(type: Exec) {
+    commandLine 'kubectl', 'delete', '-f', 'k8s/restfeed.yaml'
+}
