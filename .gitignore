@@ -1,0 +1,6 @@
+.gradle/
+.idea/
+rest-feed.iml
+build/
+idea-build/
+idea-test-build/
