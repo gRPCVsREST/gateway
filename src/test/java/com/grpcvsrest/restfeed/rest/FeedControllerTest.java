@@ -25,7 +25,7 @@ public class FeedControllerTest {
 
     private static final int CONTENT_ID = 1;
     private static final AggregatedContentResponse CONTENT_RESPONSE =
-            new AggregatedContentResponse(CONTENT_ID, "Pokemon", "Pikachu");
+            new AggregatedContentResponse(CONTENT_ID, "Pokemon", "Pikachu", "/content/2");
     @Autowired
     private MockMvc mockMvc;
 

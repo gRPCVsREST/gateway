@@ -9,6 +9,7 @@ import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +19,7 @@ public class AggregatorServiceTest {
 
     private static final int CONTENT_ID = 1;
     private static final AggregatedContentResponse CONTENT =
-            new AggregatedContentResponse(CONTENT_ID, "Pokemon", "Pikachu");
+            new AggregatedContentResponse(CONTENT_ID, "Pokemon", "Pikachu", "/content/2");
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
@@ -60,7 +61,7 @@ public class AggregatorServiceTest {
 
     private void contentNotFound() {
         when(restTemplate.getForEntity("http://fake.url/content/{id}", AggregatedContentResponse.class, CONTENT_ID))
-                .thenReturn(new ResponseEntity<>(CONTENT, HttpStatus.NOT_FOUND));
+                .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND));
     }
 
     private void contentFound() {

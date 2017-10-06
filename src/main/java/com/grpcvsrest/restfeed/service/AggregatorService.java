@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -20,14 +22,19 @@ public class AggregatorService {
     }
 
     public AggregatedContentResponse fetch(int id) {
-        ResponseEntity<AggregatedContentResponse> entity = restTemplate.getForEntity(
-                url + "/content/{id}",
-                AggregatedContentResponse.class,
-                id);
-
-        if (entity.getStatusCode().value() == 404) {
-            return null;
+        ResponseEntity<AggregatedContentResponse> entity = null;
+        try {
+            entity = restTemplate.getForEntity(
+                    url + "/content/{id}",
+                    AggregatedContentResponse.class,
+                    id);
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode().value() == 404) {
+                return null;
+            }
+            throw e;
         }
+
         return entity.getBody();
     }
 }

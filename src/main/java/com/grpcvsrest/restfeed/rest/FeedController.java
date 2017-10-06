@@ -32,6 +32,6 @@ public class FeedController {
                         aggregatedContent.getId(),
                         aggregatedContent.getType(),
                         aggregatedContent.getContent(),
-                        "/content/" + nextId));
+                        aggregatedContent.getNextUri()));
     }
 }
