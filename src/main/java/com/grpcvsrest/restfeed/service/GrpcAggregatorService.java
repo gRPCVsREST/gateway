@@ -77,6 +77,8 @@ public class GrpcAggregatorService implements AggregatorService {
             }
         }, new Metadata());
         call.request(1);
+        call.sendMessage(AggregationStreamingRequest.getDefaultInstance());
+        call.halfClose();
     }
 
     private static class ResponseOrError {
