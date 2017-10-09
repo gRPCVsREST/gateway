@@ -3,9 +3,11 @@ package com.grpcvsrest.restfeed.rest;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.grpcvsrest.restfeed.service.AggregatedContentResponse;
-import com.grpcvsrest.restfeed.service.AggregatorService;
+import com.grpcvsrest.restfeed.service.RestAggregatorService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Matchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,6 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.IOException;
 
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -30,7 +34,7 @@ public class FeedControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private AggregatorService aggregatorService;
+    private RestAggregatorService aggregatorService;
 
     @Test
     public void testFeed() throws Exception {
@@ -62,11 +66,11 @@ public class FeedControllerTest {
     }
 
     private void itemFetched() {
-        when(aggregatorService.fetch(CONTENT_ID)).thenReturn(CONTENT_RESPONSE);
+        when(aggregatorService.fetch(eq(CONTENT_ID), isNull())).thenReturn(CONTENT_RESPONSE);
     }
 
     private void itemMissing() {
-        when(aggregatorService.fetch(CONTENT_ID)).thenReturn(null);
+        when(aggregatorService.fetch(eq(CONTENT_ID), isNull())).thenReturn(null);
     }
 
 }

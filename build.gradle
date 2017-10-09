@@ -23,6 +23,8 @@ repositories {
 }
 
 dependencies {
+    compile project(':grpc-api')
+
     compile 'org.apache.commons:commons-lang3:3.6'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'com.google.guava:guava:23.0'

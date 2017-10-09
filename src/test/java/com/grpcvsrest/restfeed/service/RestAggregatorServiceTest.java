@@ -13,9 +13,11 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.when;
 
-public class AggregatorServiceTest {
+public class RestAggregatorServiceTest {
 
     private static final int CONTENT_ID = 1;
     private static final AggregatedContentResponse CONTENT =
@@ -27,11 +29,11 @@ public class AggregatorServiceTest {
     @Mock
     private RestTemplate restTemplate;
 
-    private AggregatorService service;
+    private RestAggregatorService service;
 
     @Before
     public void setup() {
-        service = new AggregatorService("http://fake.url", restTemplate);
+        service = new RestAggregatorService("http://fake.url", restTemplate);
     }
 
     @Test
@@ -40,7 +42,7 @@ public class AggregatorServiceTest {
         contentFound();
 
         // when
-        AggregatedContentResponse result = service.fetch(CONTENT_ID);
+        AggregatedContentResponse result = service.fetch(eq(CONTENT_ID), isNull());
 
         // then
         assertThat(result).isEqualTo(CONTENT);
@@ -53,7 +55,7 @@ public class AggregatorServiceTest {
         contentNotFound();
 
         // when
-        AggregatedContentResponse result = service.fetch(CONTENT_ID);
+        AggregatedContentResponse result = service.fetch(eq(CONTENT_ID), isNull());
 
         // then
         assertThat(result).isNull();
