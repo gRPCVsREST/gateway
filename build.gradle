@@ -76,3 +76,7 @@ task deploy(type: Exec) {
 task undeploy(type: Exec) {
     commandLine 'kubectl', 'delete', '-f', 'k8s/gateway.yaml'
 }
+
+task redeploy(type: Exec) {
+    commandLine 'kubectl', 'apply', '-f', 'k8s/gateway.yaml'
+}
