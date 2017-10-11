@@ -54,7 +54,7 @@ public class GrpcAggregatorService implements AggregatorService {
                 response.getId(),
                 response.getType().name(),
                 response.getContent(),
-                "next");
+                "/content/next");
     }
 
     private void subscribeWithFlowControl(String username, Queue<ResponseOrError> queue) {
