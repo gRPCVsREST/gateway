@@ -54,7 +54,7 @@ public class GrpcAggregatorService implements AggregatorService {
                 response.getId(),
                 response.getType().name(),
                 response.getContent(),
-                null);
+                "next");
     }
 
     private void subscribeWithFlowControl(String username, Queue<ResponseOrError> queue) {
@@ -64,8 +64,7 @@ public class GrpcAggregatorService implements AggregatorService {
 
             @Override
             public void onMessage(AggregationStreamingResponse message) {
-                queue.add(ResponseOrError.create(message));
-                call.request(1);
+                queue.add(ResponseOrError.create(message, call));
             }
 
             @Override
@@ -84,24 +83,29 @@ public class GrpcAggregatorService implements AggregatorService {
     private static class ResponseOrError {
         private final AggregationStreamingResponse response;
         private final RuntimeException error;
+        private final ClientCall<?, ?> clientCall;
 
-        private ResponseOrError(AggregationStreamingResponse response, RuntimeException error) {
+        private ResponseOrError(AggregationStreamingResponse response,
+                                RuntimeException error,
+                                ClientCall<?, ?> clientCall) {
             this.response = response;
             this.error = error;
+            this.clientCall = clientCall;
         }
 
-        private static ResponseOrError create(AggregationStreamingResponse response) {
-            return new ResponseOrError(response, null);
+        private static ResponseOrError create(AggregationStreamingResponse response, ClientCall<?, ?> clientCall) {
+            return new ResponseOrError(response, null, clientCall);
         }
 
         private static ResponseOrError create(RuntimeException error) {
-            return new ResponseOrError(null, error);
+            return new ResponseOrError(null, error, null);
         }
 
         private AggregationStreamingResponse getOrThrow() {
             if (error != null) {
                 throw error;
             }
+            clientCall.request(1);
             return response;
         }
     }
