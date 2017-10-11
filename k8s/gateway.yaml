@@ -22,6 +22,8 @@ spec:
               value: "grpc-aggregator-service"
             - name: grpc_aggregator_port
               value: "8080"
+            - name: foo
+              value: "bar"
 ---
 apiVersion: v1
 kind: Service
