@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -25,7 +24,7 @@ public class RestAggregatorService implements AggregatorService {
     }
 
     @Override
-    public AggregatedContentResponse fetch(int id, String username) {
+    public AggregatedContentResponse fetch(Integer id, String username) {
         ResponseEntity<AggregatedContentResponse> entity = null;
         try {
             entity = restTemplate.getForEntity(

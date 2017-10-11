@@ -5,6 +5,6 @@ package com.grpcvsrest.restfeed.service;
  */
 public interface AggregatorService {
 
-    AggregatedContentResponse fetch(int id, String username);
+    AggregatedContentResponse fetch(Integer id, String username);
 
 }
