@@ -2,7 +2,10 @@ package com.grpcvsrest.restfeed.rest;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
+import com.grpcvsrest.grpc.AggregationStreamingServiceGrpc;
 import com.grpcvsrest.restfeed.service.AggregatedContentResponse;
+import com.grpcvsrest.restfeed.service.AggregatorServiceSelector;
+import com.grpcvsrest.restfeed.service.GrpcAggregatorService;
 import com.grpcvsrest.restfeed.service.RestAggregatorService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest
+@WebMvcTest(FeedController.class)
 public class FeedControllerTest {
 
     private static final int CONTENT_ID = 1;
@@ -33,8 +36,14 @@ public class FeedControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean(name = "aggr-service")
+    private AggregatorServiceSelector aggregatorService;
+    @MockBean(name = "rest-aggr-service")
+    private RestAggregatorService restAggregatorService;
+    @MockBean(name = "grpc-aggr-service")
+    private GrpcAggregatorService grpcAggregatorService;
     @MockBean
-    private RestAggregatorService aggregatorService;
+    private AggregationStreamingServiceGrpc.AggregationStreamingServiceStub grpcStub;
 
     @Test
     public void testFeed() throws Exception {

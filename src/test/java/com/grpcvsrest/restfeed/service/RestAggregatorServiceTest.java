@@ -42,7 +42,7 @@ public class RestAggregatorServiceTest {
         contentFound();
 
         // when
-        AggregatedContentResponse result = service.fetch(eq(CONTENT_ID), isNull());
+        AggregatedContentResponse result = service.fetch(CONTENT_ID, null);
 
         // then
         assertThat(result).isEqualTo(CONTENT);
@@ -55,7 +55,7 @@ public class RestAggregatorServiceTest {
         contentNotFound();
 
         // when
-        AggregatedContentResponse result = service.fetch(eq(CONTENT_ID), isNull());
+        AggregatedContentResponse result = service.fetch(CONTENT_ID, null);
 
         // then
         assertThat(result).isNull();
