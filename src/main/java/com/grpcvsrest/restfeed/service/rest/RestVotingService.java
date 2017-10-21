@@ -1,13 +1,14 @@
-package com.grpcvsrest.restfeed.service;
+package com.grpcvsrest.restfeed.service.rest;
 
 import com.google.common.collect.ImmutableMap;
+import com.grpcvsrest.restfeed.service.VotingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Service
-public class RestVotingService {
+@Service("rest-voting-service")
+public class RestVotingService implements VotingService {
     private final String url;
     private final RestTemplate restTemplate;
 
@@ -19,6 +20,7 @@ public class RestVotingService {
         this.restTemplate = restTemplate;
     }
 
+    @Override
     public void vote(String username, int itemId, String votedCategory) {
         Vote vote = new Vote(username, itemId, votedCategory);
         restTemplate.postForEntity(

@@ -1,16 +1,20 @@
 package com.grpcvsrest.restfeed.rest;
 
-import com.grpcvsrest.restfeed.service.RestVotingService;
+import com.grpcvsrest.restfeed.service.VotingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class VotingController {
 
-    private final RestVotingService restVotingService;
+    private final VotingService restVotingService;
 
     @Autowired
-    public VotingController(RestVotingService restVotingService) {
+    public VotingController(@Qualifier("voting-service") VotingService restVotingService) {
         this.restVotingService = restVotingService;
     }
 

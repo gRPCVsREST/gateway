@@ -1,9 +1,11 @@
-package com.grpcvsrest.restfeed.service;
+package com.grpcvsrest.restfeed.service.grpc;
 
 import com.grpcvsrest.grpc.AggregationStreamingRequest;
 import com.grpcvsrest.grpc.AggregationStreamingResponse;
 import com.grpcvsrest.grpc.AggregationStreamingServiceGrpc;
 import com.grpcvsrest.grpc.AggregationStreamingServiceGrpc.AggregationStreamingServiceStub;
+import com.grpcvsrest.restfeed.service.AggregatedContentResponse;
+import com.grpcvsrest.restfeed.service.AggregatorService;
 import io.grpc.ClientCall;
 import io.grpc.ClientCall.Listener;
 import io.grpc.Metadata;

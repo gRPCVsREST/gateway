@@ -1,5 +1,6 @@
 package com.grpcvsrest.restfeed.service;
 
+import com.grpcvsrest.restfeed.service.rest.RestAggregatorService;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

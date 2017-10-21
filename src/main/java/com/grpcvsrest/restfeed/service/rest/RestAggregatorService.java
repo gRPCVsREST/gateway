@@ -1,5 +1,7 @@
-package com.grpcvsrest.restfeed.service;
+package com.grpcvsrest.restfeed.service.rest;
 
+import com.grpcvsrest.restfeed.service.AggregatedContentResponse;
+import com.grpcvsrest.restfeed.service.AggregatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,7 @@ public class RestAggregatorService implements AggregatorService {
 
     @Override
     public AggregatedContentResponse fetch(Integer id, String username) {
-        ResponseEntity<AggregatedContentResponse> entity = null;
+        ResponseEntity<AggregatedContentResponse> entity;
         try {
             entity = restTemplate.getForEntity(
                     url + "/content/{id}",
