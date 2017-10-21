@@ -29,7 +29,7 @@ public class AggregatorServiceSelector implements AggregatorService {
     }
 
     @Override
-    public AggregatedContentResponse fetch(int id, String username) {
+    public AggregatedContentResponse fetch(Integer id, String username) {
         return chooseService(username).fetch(id, username);
     }
 

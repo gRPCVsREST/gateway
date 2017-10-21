@@ -33,7 +33,7 @@ public class GrpcAggregatorService implements AggregatorService {
     }
 
     @Override
-    public AggregatedContentResponse fetch(int id, String username) {
+    public AggregatedContentResponse fetch(Integer id, String username) {
 
         BlockingQueue<ResponseOrError> newQueue = new LinkedBlockingQueue<>();
         BlockingQueue<ResponseOrError> existing = userToQueue.putIfAbsent(username, newQueue);
@@ -54,7 +54,7 @@ public class GrpcAggregatorService implements AggregatorService {
                 response.getId(),
                 response.getType().name(),
                 response.getContent(),
-                "/content/next");
+                "/content");
     }
 
     private void subscribeWithFlowControl(String username, Queue<ResponseOrError> queue) {
