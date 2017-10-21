@@ -1,3 +1,5 @@
+#!/bin/bash
+cat <<YAML
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
@@ -22,8 +24,8 @@ spec:
               value: "grpc-aggregator-service"
             - name: grpc_aggregator_port
               value: "8080"
-            - name: foo
-              value: "bar"
+            - name: temp
+              value: "$(date +%s)"
 ---
 apiVersion: v1
 kind: Service
@@ -38,3 +40,4 @@ spec:
      targetPort: 8080
      protocol: TCP
 ---
+YAML
