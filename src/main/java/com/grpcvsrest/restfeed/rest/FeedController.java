@@ -21,7 +21,7 @@ public class FeedController {
         this.aggregatorService = aggregatorService;
     }
 
-    @GetMapping({"/content/{id}", "/content"})
+    @GetMapping({"/content/{id}", "/content", "/content/next"})
     public ResponseEntity<FeedItem> feedItem(@PathVariable(value = "id", required = false) Integer id,
                                              @RequestHeader(value = "username", required = false) String username) {
         AggregatedContentResponse aggregatedContent = aggregatorService.fetch(id, username);
