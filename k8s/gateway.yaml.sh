@@ -24,6 +24,10 @@ spec:
               value: "grpc-aggregator-service"
             - name: grpc_aggregator_port
               value: "8080"
+            - name: grpc_voting_host
+              value: "grpc-voting"
+            - name: grpc_voting_port
+              value: "8080"
             - name: temp
               value: "$(date +%s)"
 ---
