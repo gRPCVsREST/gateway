@@ -27,6 +27,6 @@ public class GrpcVotingService implements VotingService {
                 .setItemId(itemId)
                 .setVotedCategory(voted)
                 .build();
-        votingServiceClient.withDeadlineAfter(300, MILLISECONDS).vote(request);
+        votingServiceClient.withDeadlineAfter(500, MILLISECONDS).vote(request);
     }
 }
