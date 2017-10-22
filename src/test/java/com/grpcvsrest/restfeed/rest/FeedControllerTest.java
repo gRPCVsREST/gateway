@@ -3,9 +3,11 @@ package com.grpcvsrest.restfeed.rest;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.grpcvsrest.grpc.AggregationStreamingServiceGrpc;
+import com.grpcvsrest.grpc.VotingServiceGrpc;
 import com.grpcvsrest.restfeed.service.AggregatedContentResponse;
 import com.grpcvsrest.restfeed.service.AggregatorServiceSelector;
 import com.grpcvsrest.restfeed.service.grpc.GrpcAggregatorService;
+import com.grpcvsrest.restfeed.service.grpc.GrpcVotingService;
 import com.grpcvsrest.restfeed.service.rest.RestAggregatorService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,6 +44,8 @@ public class FeedControllerTest {
     private GrpcAggregatorService grpcAggregatorService;
     @MockBean
     private AggregationStreamingServiceGrpc.AggregationStreamingServiceStub grpcStub;
+    @MockBean
+    private VotingServiceGrpc.VotingServiceFutureStub grpcVotingServiceClient;
 
     @Test
     public void testFeed() throws Exception {
