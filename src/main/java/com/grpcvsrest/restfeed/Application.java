@@ -10,6 +10,7 @@ import io.grpc.netty.NettyChannelBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.sleuth.SpanAdjuster;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 import zipkin2.reporter.AsyncReporter;
@@ -19,6 +20,11 @@ import static brave.sampler.Sampler.ALWAYS_SAMPLE;
 
 @SpringBootApplication
 public class Application {
+
+    @Bean
+    public SpanAdjuster customSpanAdjuster(@Value("${spring.application.name}") String appName) {
+        return span -> span.toBuilder().name("#" + appName + "/" + span.getName().replace("http:/", "")).build();
+    }
 
     @Bean
     public RestTemplate restTemplate() {
