@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: gateway
-          image: gcr.io/alien-fold-180922/gateway:latest
+          image: gcr.io/$GCP_PROJECT/gateway:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -30,6 +30,10 @@ spec:
               value: "8080"
             - name: temp
               value: "$(date +%s)"
+            - name: ZIPKIN_SERVICE_HOST
+              value: "zipkin"
+            - name: ZIPKIN_SERVICE_PORT
+              value: "9411"
 ---
 apiVersion: v1
 kind: Service

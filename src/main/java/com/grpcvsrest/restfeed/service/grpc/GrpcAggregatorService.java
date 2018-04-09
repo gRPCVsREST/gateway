@@ -84,10 +84,10 @@ public class GrpcAggregatorService implements AggregatorService {
 
             @Override
             public void onClose(Status status, Metadata trailers) {
-                userToCallAndQueue.invalidate(username);
                 if (!status.isOk()) {
                     queue.add(ResponseOrError.create(status.asRuntimeException(trailers)));
                 }
+                userToCallAndQueue.invalidate(username);
             }
         }, new Metadata());
         queue.setCall(call);

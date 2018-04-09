@@ -60,6 +60,7 @@ public class Application {
                     protected <ReqT, RespT> void onStart(MethodDescriptor<ReqT, RespT> method, CallOptions options,
                                                          Metadata headers, SpanCustomizer span) {
                         span.tag("grpc.method", method.getFullMethodName());
+                        span.name("#grpc." + method.getFullMethodName());
                     }
                 })
                 .build();

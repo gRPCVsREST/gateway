@@ -1,14 +1,7 @@
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-
 buildscript {
     repositories {
         jcenter()
     }
-    dependencies {
-        classpath 'com.bmuschko:gradle-docker-plugin:3.1.0'
-        classpath "io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE"
-    }
-
 }
 
 plugins {
@@ -17,7 +10,6 @@ plugins {
     id 'org.springframework.boot' version '1.5.6.RELEASE'
 }
 
-apply plugin: 'com.bmuschko.docker-remote-api'
 apply plugin: 'io.spring.dependency-management'
 
 
@@ -29,10 +21,13 @@ dependencyManagement {
 
 repositories {
     jcenter()
+    maven {
+        url "https://grpcvsrest.s3.amazonaws.com/snapshots"
+    }
 }
 
 dependencies {
-    compile project(':grpc-api')
+    compile 'com.grpcvsrest:grpc-api:1.0-SNAPSHOT'
 
     compile 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
     compile 'org.springframework.cloud:spring-cloud-starter-sleuth'
@@ -59,34 +54,4 @@ bootRepackage {
     mainClass = 'com.grpcvsrest.restfeed.Application'
 }
 
-task buildImage(type: DockerBuildImage) {
-    dependsOn jar
-    inputDir = project.projectDir
-    tag = 'gateway'
-}
-
-
-task buildDocker(type: DockerBuildImage) {
-    dependsOn bootRepackage
-    inputDir = project.projectDir
-    tag = 'gateway:latest'
-}
-
-task tagDocker(type: Exec) {
-    dependsOn buildDocker
-    commandLine 'docker', 'tag', 'gateway:latest', 'gcr.io/alien-fold-180922/gateway:latest'
-}
-
-task pushDocker(type: Exec) {
-    dependsOn tagDocker
-    commandLine 'gcloud', 'docker', '--', 'push', 'gcr.io/alien-fold-180922/gateway:latest'
-}
-
-task deploy(type: Exec) {
-    commandLine './k8s/deploy.sh'
-}
-
-
-task undeploy(type: Exec) {
-    commandLine 'kubectl', 'delete', '-f', 'k8s/gateway.yaml'
-}
+apply from: 'https://raw.githubusercontent.com/gRPCVsREST/gradle-common/master/common.gradle'
