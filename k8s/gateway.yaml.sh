@@ -19,9 +19,9 @@ spec:
             - containerPort: 8080
           env:
             - name: rest_aggregator_url
-              value: "http://rest-aggregator-service:8080"
+              value: "http://rest-aggregator:8080"
             - name: grpc_aggregator_host
-              value: "grpc-aggregator-service"
+              value: "grpc-aggregator"
             - name: grpc_aggregator_port
               value: "8080"
             - name: grpc_voting_host

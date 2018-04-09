@@ -74,7 +74,7 @@ public class Application {
         return AggregationStreamingServiceGrpc.newStub(NettyChannelBuilder
                 .forAddress(host, port)
                 .intercept(grpcTracing.newClientInterceptor())
-                .usePlaintext(true).build());
+                .usePlaintext().build());
     }
 
     @Bean
@@ -84,7 +84,7 @@ public class Application {
         return VotingServiceGrpc.newFutureStub(NettyChannelBuilder
                 .forAddress(host, port)
                 .intercept(grpcTracing.newClientInterceptor())
-                .usePlaintext(true).build());
+                .usePlaintext().build());
     }
 
     public static void main(String[] args) {
