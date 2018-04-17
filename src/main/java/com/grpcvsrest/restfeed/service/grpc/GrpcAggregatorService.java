@@ -74,7 +74,7 @@ public class GrpcAggregatorService implements AggregatorService {
 
     private void subscribeWithFlowControl(String username, CallAndQueue queue) {
         ClientCall<AggregationStreamingRequest, AggregationStreamingResponse> call =
-                stub.getChannel().newCall(AggregationStreamingServiceGrpc.METHOD_SUBSCRIBE, stub.getCallOptions());
+                stub.getChannel().newCall(AggregationStreamingServiceGrpc.getSubscribeMethod(), stub.getCallOptions());
         call.start(new Listener<AggregationStreamingResponse>() {
 
             @Override

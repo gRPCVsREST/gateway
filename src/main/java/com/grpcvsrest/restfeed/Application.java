@@ -39,8 +39,7 @@ public class Application {
 
     @Bean
     public GrpcTracing grpcTracing(@Value("${zipkin_service_host:zipkin}") String zipkinHost,
-                                   @Value("${zipkin_service_port:9411}") int zipkinPort,
-                                   Tracer tracer) {
+                                   @Value("${zipkin_service_port:9411}") int zipkinPort) {
 
         URLConnectionSender sender = URLConnectionSender.newBuilder()
                 .endpoint(String.format("http://%s:%s/api/v2/spans", zipkinHost, zipkinPort))
@@ -48,21 +47,7 @@ public class Application {
 
         return GrpcTracing.newBuilder(Tracing.newBuilder()
                 .sampler(ALWAYS_SAMPLE)
-                .spanReporter(AsyncReporter.create(sender))
-                .build())
-                .clientParser(new GrpcClientParser() {
-                    @Override
-                    protected <M> void onMessageSent(M message, SpanCustomizer span) {
-                        span.name(tracer.getCurrentSpan().getName());
-                    }
-
-                    @Override
-                    protected <ReqT, RespT> void onStart(MethodDescriptor<ReqT, RespT> method, CallOptions options,
-                                                         Metadata headers, SpanCustomizer span) {
-                        span.tag("grpc.method", method.getFullMethodName());
-                        span.name("#grpc." + method.getFullMethodName());
-                    }
-                })
+                .spanReporter(AsyncReporter.create(sender)).build())
                 .build();
     }
 
